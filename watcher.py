@@ -1,7 +1,11 @@
 import time
+import redis
 
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
+object_id_raws = 'object_id_raws'
 
 
 class Watcher:
@@ -30,12 +34,13 @@ class Handler(FileSystemEventHandler):
             return None
 
         elif event.event_type == 'created':
-            print(event.src_path)
             filename = event.src_path
 
             if 'object_id.raw' in filename:
+                print(event.src_path)
                 # TODO: Put this into some queue or pubsub mechanism
                 # Load the object_id.raw file and skip the first 4 bytes
+                r.lpush(object_id_raws, filename)
                 pass
             else:
                 pass
