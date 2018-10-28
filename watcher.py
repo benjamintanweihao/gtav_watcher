@@ -38,7 +38,6 @@ class Handler(FileSystemEventHandler):
 
             if 'object_id.raw' in filename:
                 print(event.src_path)
-                # TODO: Put this into some queue or pubsub mechanism
                 # Load the object_id.raw file and skip the first 4 bytes
                 r.lpush(object_id_raws, filename)
                 pass

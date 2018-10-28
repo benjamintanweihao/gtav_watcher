@@ -34,12 +34,17 @@ def animate(foo):
             # shifting the bits to differentiate the segments
             # B = A & ((1 << 28) - 1)
             B = A
+            plt.clf()
             im = plt.imshow(B, cmap=cmap)
             prev_data = B
         except:
+            plt.clf()
             im = plt.imshow(prev_data, cmap=cmap)
     else:
         im = plt.imshow(prev_data, cmap=cmap)
+
+    plt.pause(0.0001)
+
 
     return im,
 
@@ -55,7 +60,7 @@ def init():
 ani = animation.FuncAnimation(fig, animate,
                               init_func=init,
                               frames=nx * ny,
-                              interval=10,
-                              blit=False)
+                              interval=1,
+                              blit=True)
 
 plt.show()
